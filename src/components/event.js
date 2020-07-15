@@ -23,11 +23,19 @@ class Event extends Component {
               </h3>
 
               <div className="media-body mb-3 mb-lg-3">
-                <MDBBadge color="danger" className="ml-2 float-right">
-                    -
-                </MDBBadge>
-                <h6 className="mt-0 font-weight-bold">{this.props.title} </h6>{" "}
+
+                <MDBIcon 
+                  icon="trash"  
+                  className="float-right red-text pr-3 del-button ml-3"
+                  onClick={() => this.props.onDelete(this.props.id)}
+                />
+
+                <h6 className="mt-0 font-weight-bold">
+                  {this.props.title} 
+                </h6>{" "}
+
                 <hr className="hr-bold my-2" />
+
                 {this.props.location && (
                     <>
                         <p className="font-smaller mb-0">
@@ -35,6 +43,7 @@ class Event extends Component {
                         </p>
                     </>
                 )}
+
               </div>
 
             </div>

@@ -41,6 +41,11 @@ class App extends Component {
       }
     };
 
+  handleDelete = eventId => {
+    const events = this.state.events.filter(e => e.id !== eventId);
+    this.setState({ events });
+  };
+
   render() {
     return (
       <>
@@ -48,6 +53,7 @@ class App extends Component {
           <MDBRow>
             <MDBCol md="9" className="mb-r">
               <h2 className="text-uppercase my-3">Today:</h2>
+
               <div id="schedule-items">
                 {this.state.events.map(event => (
                   <Event
@@ -57,9 +63,11 @@ class App extends Component {
                     title={event.title}
                     location={event.location}
                     description={event.description}
+                    onDelete={this.handleDelete}
                   />
                 ))}
               </div>
+              
               <MDBRow className="mb-4">
                 <MDBCol xl="3" md="6" className="mx-auto text-center">
                   <MDBBtn color="info" rounded>
