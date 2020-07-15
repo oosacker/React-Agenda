@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import {MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBIcon, MDBBadge, MDBContainer, MDBRow, MDBCol} from "mdbreact";
+import {MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBContainer, MDBRow, MDBCol} from "mdbreact";
 import Event from './event';
 import Summary from './summary';
 
@@ -54,6 +54,14 @@ class App extends Component {
     });
   };
 
+  handleInputChange = inputName => value => {
+    const nextValue = value;
+    this.setState({
+      [inputName]: nextValue
+    });
+    console.log(this.state);
+  };
+
   render() {
     return (
       <>
@@ -99,9 +107,50 @@ class App extends Component {
           >
             Add new event
           </MDBModalHeader>
-          <MDBModalBody>Body</MDBModalBody>
-          <MDBModalFooter className="justify-content-center">
-          </MDBModalFooter>
+
+          <MDBModalBody>
+
+            <form className="mx-3 grey-text">
+              <MDBInput
+                name="time"
+                label="Time"
+                icon="clock"
+                hint="12:30"
+                group
+                type="text"
+                getValue={this.handleInputChange("time")}
+              />
+              <MDBInput
+                name="title"
+                label="Title"
+                icon="edit"
+                hint="Briefing"
+                group
+                type="text"
+                getValue={this.handleInputChange("title")}
+              />
+              <MDBInput
+                name="location"
+                label="Location (optional)"
+                icon="map"
+                group
+                type="text"
+                getValue={this.handleInputChange("location")}
+              />
+              <MDBInput
+                name="description"
+                label="Description (optional)"
+                icon="sticky-note"
+                group
+                type="textarea"
+                getValue={this.handleInputChange("description")}
+              />
+            </form>
+
+          </MDBModalBody>
+
+          <MDBModalFooter className="justify-content-center" />
+
         </MDBModal>
       </>
     );
