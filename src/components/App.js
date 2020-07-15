@@ -38,13 +38,20 @@ class App extends Component {
                 location: "Canteen",
                 description: "Project evaluation"
             }
-        ]
+        ],
+        modal: false,
       }
     };
 
   handleDelete = eventId => {
     const events = this.state.events.filter(e => e.id !== eventId);
     this.setState({ events });
+  };
+
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   };
 
   render() {
@@ -71,7 +78,7 @@ class App extends Component {
               
               <MDBRow className="mb-4">
                 <MDBCol xl="3" md="6" className="mx-auto text-center">
-                  <MDBBtn color="info" rounded>
+                  <MDBBtn color="info" rounded onClick={this.toggleModal}>
                     Add Event
                   </MDBBtn>
                 </MDBCol>
@@ -82,6 +89,20 @@ class App extends Component {
             </MDBCol>
           </MDBRow>
         </MDBContainer>
+
+
+        <MDBModal isOpen={this.state.modal} toggle={this.toggleModal}>
+          <MDBModalHeader
+            className="text-center"
+            titleClass="w-100 font-weight-bold"
+            toggle={this.toggleModal}
+          >
+            Add new event
+          </MDBModalHeader>
+          <MDBModalBody>Body</MDBModalBody>
+          <MDBModalFooter className="justify-content-center">
+          </MDBModalFooter>
+        </MDBModal>
       </>
     );
   }
