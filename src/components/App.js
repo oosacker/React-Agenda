@@ -55,14 +55,43 @@ class App extends Component {
   };
 
   handleInputChange = inputName => value => {
+
+    console.log(`inputName=${inputName} value=${value}`);
+
     const nextValue = value;
     this.setState({
       [inputName]: nextValue
     });
-    console.log(this.state);
+    // console.log(this.state);
   };
 
+  displayVal = (val) => console.log('value: ' + val);
+
+
+  addEvent = () => {
+    var newArray = [...this.state.events];
+    newArray.push({
+      id: newArray.length ? newArray[newArray.length - 1].id + 1 : 1,
+      time: this.state.time,
+      title: this.state.title,
+      location: this.state.location,
+      description: this.state.description,
+      value: this.var > 5 ? "Its's grater then 5" : "Its lower or equal 5"
+    });
+    this.setState({ events: newArray });
+    this.setState({
+      time: "",
+      title: "",
+      location: "",
+      description: ""
+    });
+  }
+
+
   render() {
+
+    console.log('rendering')
+
     return (
       <>
         <MDBContainer>
@@ -118,8 +147,11 @@ class App extends Component {
                 hint="12:30"
                 group
                 type="text"
-                getValue={this.handleInputChange("time")}
+                // getValue={ this.handleInputChange("time") }
+                // onChange={console.log('test')}
+                getValue={ this.displayVal }
               />
+
               <MDBInput
                 name="title"
                 label="Title"
@@ -129,6 +161,7 @@ class App extends Component {
                 type="text"
                 getValue={this.handleInputChange("title")}
               />
+
               <MDBInput
                 name="location"
                 label="Location (optional)"
@@ -137,6 +170,7 @@ class App extends Component {
                 type="text"
                 getValue={this.handleInputChange("location")}
               />
+
               <MDBInput
                 name="description"
                 label="Description (optional)"
@@ -145,11 +179,22 @@ class App extends Component {
                 type="textarea"
                 getValue={this.handleInputChange("description")}
               />
+
             </form>
 
           </MDBModalBody>
 
-          <MDBModalFooter className="justify-content-center" />
+          <MDBModalFooter className="justify-content-center">
+            <MDBBtn
+              color="info"
+              onClick={() => {
+                this.toggleModal();
+                this.addEvent();
+              }}
+            >
+              Add
+            </MDBBtn>
+          </MDBModalFooter>
 
         </MDBModal>
       </>
