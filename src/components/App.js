@@ -10,65 +10,47 @@ class App extends Component {
     constructor(props) {
       super(props);
       this.state = {
+        modal: false,
         events: [
             {
-                id: 0,
+                id: 1,
                 time: "10:00",
                 title: "Breakfast with Simon",
                 location: "Lounge Caffe",
                 description: "Discuss Q3 targets"
             },
             {
-                id: 1,
+                id: 2,
                 time: "10:30",
                 title: "Daily Standup Meeting (recurring)",
                 location: "Warsaw Spire Office",
                 
             },
             { 
-                id: 2, 
+                id: 3, 
                 time: "11:00", 
                 title: "Call with HRs",
                 description: "Project meeting"
             },
             {
-                id: 3,
+                id: 4,
                 time: "11:00",
                 title: "Lunch with Timothy",
                 location: "Canteen",
                 description: "Project evaluation"
             }
-        ],
-        modal: false,
+        ]
       }
     };
 
-  handleDelete = eventId => {
-    const events = this.state.events.filter(e => e.id !== eventId);
-    this.setState({ events });
-  };
 
-  toggleModal = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-  };
 
-  handleInputChange = inputName => value => {
 
-    console.log(`inputName=${inputName} value=${value}`);
-
-    const nextValue = value;
-    this.setState({
-      [inputName]: nextValue
-    });
-    // console.log(this.state);
-  };
-
-  displayVal = (val) => console.log('value: ' + val);
 
 
   addEvent = () => {
+    console.log('add event')
+    
     var newArray = [...this.state.events];
     newArray.push({
       id: newArray.length ? newArray[newArray.length - 1].id + 1 : 1,
@@ -76,7 +58,7 @@ class App extends Component {
       title: this.state.title,
       location: this.state.location,
       description: this.state.description,
-      value: this.var > 5 ? "Its's grater then 5" : "Its lower or equal 5"
+      value: this.var > 5 ? "It's greater than 5" : "It's lower or equal 5"
     });
     this.setState({ events: newArray });
     this.setState({
@@ -87,10 +69,31 @@ class App extends Component {
     });
   }
 
+  handleInputChange = inputName => value => {
+    console.log(`inputName=${inputName} value=${value}`);
+    const nextValue = value;
+    this.setState({
+      [inputName]: nextValue
+    });
+    console.log(this.state);
+  };
+
+
+  handleDelete = eventId => {
+    const events = this.state.events.filter(e => e.id !== eventId);
+    this.setState({ events });
+  };
+
+
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
 
   render() {
 
     console.log('rendering')
+    console.log('modal: '+this.state.modal)
 
     return (
       <>
@@ -129,17 +132,17 @@ class App extends Component {
 
 
         <MDBModal isOpen={this.state.modal} toggle={this.toggleModal}>
-          <MDBModalHeader
-            className="text-center"
-            titleClass="w-100 font-weight-bold"
-            toggle={this.toggleModal}
-          >
+
+          
+
+          <MDBModalHeader className="text-center" titleClass="w-100 font-weight-bold" toggle={this.toggleModal}>
             Add new event
           </MDBModalHeader>
 
           <MDBModalBody>
 
             <form className="mx-3 grey-text">
+
               <MDBInput
                 name="time"
                 label="Time"
@@ -147,9 +150,9 @@ class App extends Component {
                 hint="12:30"
                 group
                 type="text"
-                // getValue={ this.handleInputChange("time") }
-                // onChange={console.log('test')}
-                getValue={ this.displayVal }
+                getValue={ this.handleInputChange("time") }
+                // onChange={ this.displayVal }
+                // getValue={ this.displayVal }
               />
 
               <MDBInput
@@ -185,13 +188,10 @@ class App extends Component {
           </MDBModalBody>
 
           <MDBModalFooter className="justify-content-center">
-            <MDBBtn
-              color="info"
-              onClick={() => {
-                this.toggleModal();
-                this.addEvent();
-              }}
-            >
+            <MDBBtn color="info" onClick={ () => { 
+                this.toggleModal(); 
+                this.addEvent(); 
+              }}>
               Add
             </MDBBtn>
           </MDBModalFooter>
